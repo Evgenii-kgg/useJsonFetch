@@ -6,20 +6,24 @@ import Loading from "./Loading";
 
 function App() {
 
-  const res = useJsonFetch( 'http://localhost:7070/data', {});
-console.log(res);
+  const success = useJsonFetch( 'http://localhost:7070/data', {});
+  const error = useJsonFetch( 'http://localhost:7070/error', {});
+  const loading = useJsonFetch( 'http://localhost:7070/loading', {});
+    console.log(error)
 
-if (!res.data) {
+
+
+if (!success.data) {
   return <div>Loading...</div>
 }
-const status = res.data.status
+const status = success.data.status
 return (
   <div className="App">
     <div>
       <h3>{status}</h3>
     </div>
-    <Error />
-    <Loading />
+    <Error error={error.error} message={error.data.status} />
+    <Loading loading={loading.loading}/>
   </div>
 );
 }

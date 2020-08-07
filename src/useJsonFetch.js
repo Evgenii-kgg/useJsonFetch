@@ -10,11 +10,12 @@ function useJsonFetch(url, opts) {
       setLoading(true);
       try {
         const res = await fetch(url, opts);
+        setError(res.status !== 200)
         const json = await res.json();
         setData(json);
         setLoading(false)
       } catch (error) {
-        setError(error);
+        setError(true);
       } finally {
         setLoading(false)
       }
