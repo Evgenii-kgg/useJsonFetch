@@ -1,31 +1,30 @@
 import React from "react";
 
 import useJsonFetch from "./useJsonFetch";
-import Error from './Error';
-import Loading from "./Loading";
+
+function Fetch({ url }) {
+    const [data, loading, error] = useJsonFetch(
+        url, {});
+    console.log(data, loading, error);
+    return (
+        loading
+            ? <div>Loading...</div>
+            : error
+                ? <div>Error</div>
+                : [data.status]
+    )
+}
 
 function App() {
 
-  const success = useJsonFetch( 'http://localhost:7070/data', {});
-  const error = useJsonFetch( 'http://localhost:7070/error', {});
-  const loading = useJsonFetch( 'http://localhost:7070/loading', {});
-    console.log(error)
+    return (
+        <>
+            <Fetch url={"http://localhost:7070/data"}  />
+            <Fetch url={"http://localhost:7070/error"} />
+            <Fetch url={"http://localhost:7070/loading"} />
+        </>
+    )
 
-
-
-if (!success.data) {
-  return <div>Loading...</div>
-}
-const status = success.data.status
-return (
-  <div className="App">
-    <div>
-      <h3>{status}</h3>
-    </div>
-    <Error error={error.error} message={error.data.status} />
-    <Loading loading={loading.loading}/>
-  </div>
-);
 }
 
 export default App;

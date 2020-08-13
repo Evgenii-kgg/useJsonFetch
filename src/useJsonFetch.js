@@ -10,7 +10,7 @@ function useJsonFetch(url, opts) {
       setLoading(true);
       try {
         const res = await fetch(url, opts);
-        setError(res.status !== 200)
+        setError(res.ok) // status !== 2xx
         const json = await res.json();
         setData(json);
         setLoading(false)
@@ -21,9 +21,9 @@ function useJsonFetch(url, opts) {
       }
     };
     fetchData();
-  }, []);
+  }, [url]);
 
-return {data, loading, error};
+return [data, loading, error];
 }
 
 export default useJsonFetch;
